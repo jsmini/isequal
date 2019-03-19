@@ -7,7 +7,7 @@
 [![NPM downloads](http://img.shields.io/npm/dm/@jsmini/isequal.svg?style=flat-square)](http://www.npmtrends.com/@jsmini/isequal)
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/jsmini/isequal.svg)](http://isitmaintained.com/project/jsmini/isequal "Percentage of issues still open")
 
-一组小而美的JS库，jsmini脚手架，fork或clone本仓库，即可搭建完成一个新的jsmini库
+支持复杂数据的值比较
 
 ## 兼容性
 单元测试保证支持如下环境：
@@ -15,8 +15,6 @@
 | IE   | CH   | FF   | SF   | OP   | IOS  | 安卓   | Node  |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----- |
 | 6+   | 23+  | 4+   | 6+   | 10+  | 5+   | 2.3+ | 0.10+ |
-
-**注意：编译代码依赖ES5环境，对于ie6-8需要引入[es5-shim](http://github.com/es-shims/es5-shim/)才可以兼容，可以查看[demo/demo-global.html](../demo/demo-global.html)中的例子**
 
 ## 目录介绍
 
