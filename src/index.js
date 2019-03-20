@@ -10,7 +10,7 @@ function keys(obj) {
     return keyList;
 }
 
-function equalArrays(value, other, compare) {
+function equalArray(value, other, compare) {
     if (value.length !== other.length) {
         return false;
     }
@@ -24,7 +24,7 @@ function equalArrays(value, other, compare) {
     return true;
 }
 
-function equalObjects(value, other, compare) {
+function equalObject(value, other, compare) {
     const vKeys = keys(value);
     const oKeys = keys(other);
 
@@ -74,11 +74,11 @@ export function isEqual (value, other, compare) {
         }
 
         if (vType === 'array') {
-            return equalArrays(value, other, compare);
+            return equalArray(value, other, compare);
         }
 
         if (vType === 'object') {
-            return equalObjects(value, other, compare);
+            return equalObject(value, other, compare);
         }
 
         return value === other;
@@ -90,6 +90,6 @@ export function isEqual (value, other, compare) {
     return next();
 }
 
-export function isEqualJSON(value, other) {
-    return JSON.stringify(value) === JSON.stringify(other);
+export function isEqualJSON(value, other, replacer = false) {
+    return JSON.stringify(value, replacer) === JSON.stringify(other, replacer);
 }

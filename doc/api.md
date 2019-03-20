@@ -1,47 +1,75 @@
 # 文档
-这是一个xxx库，有xxx功能
+支持复杂数据的值比较
 
 ## isEqual
-函数简单介绍
+递归判断两个变量是否相等，支持自定义比较函数
 
-函数详细介绍
+支持的类型和比较情况如下：
 
-函数参数和返回值（要遵守下面的例子的规则）
+- 转换为基本值比较：Boolean, String, Number
+- 递归比较：array, object
+- 全等比较：undefined, null, number, boolean, string, symbol, function, date, regexp等
 
-- param {string} name1 name1描述
-- param {number} [name2] name2描述 ([]代表可选参数)
-- param {string|number} name3 name3描述 (| 代表多种类型)
-- param {*} name3 name3描述 (*代表任意类型)
-- param {boolean} obj.sex 复合参数定义
-- return {string} 返回值描述
+可以使用自定义比较函数改变比较方式，比如function, date, regexp等
+
+函数参数和返回值
+
+- @param {*} value 要判断的参数
+- @param {*} object 要判断的另一个参数
+- @param {function} compare 自定义比较函数
+- @return {boolean} 是否相等
 
 举个例子（要包含代码用例）
 
 ```js
-// 代码
+var a = {a: 1};
+var b = {a: 1};
+
+a === b // false
+isEqualJSON(a, b) // true
+
+
+var c = function a() {}
+var d = function a() {}
+
+isEqualJSON(c, d); // false
+isEqualJSON(c, d, function (o, t, next) {
+    if (typeof o === 'function' && typeof t === 'function') {
+        return o.toString() === t.toString();
+    }
+
+    return next(); 
+}); // true
 ```
-
-特殊说明，比如特殊情况下会报错等
-
 
 ## isEqualJSON
-函数简单介绍
+判断两个变量是否相等，内部使用`JSON.stringify`序列化变量，再做比较
 
-函数详细介绍
+函数参数和返回值
 
-函数参数和返回值（要遵守下面的例子的规则）
-
-- param {string} name1 name1描述
-- param {number} [name2] name2描述 ([]代表可选参数)
-- param {string|number} name3 name3描述 (| 代表多种类型)
-- param {*} name3 name3描述 (*代表任意类型)
-- param {boolean} obj.sex 复合参数定义
-- return {string} 返回值描述
+- @param {*} value 要判断的参数
+- @param {*} object 要判断的另一个参数
+- @param {function|array} replacer 同JSON.stringify的replacer
+- @return {boolean} 是否相等
 
 举个例子（要包含代码用例）
 
 ```js
-// 代码
-```
+var a = {a: 1};
+var b = {a: 1};
 
-特殊说明，比如特殊情况下会报错等
+a === b // false
+isEqualJSON(a, b) // true
+
+var c = function a() {}
+var d = function b() {}
+
+isEqualJSON(c, d) // true
+isEqualJSON(c, d, function (k, v) {
+    if (typeof v === 'function') {
+        return v.toString();
+    }
+
+    return v;
+}) // false
+```
