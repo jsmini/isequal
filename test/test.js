@@ -3,6 +3,8 @@ var expect = require('expect.js');
 var isEqual = require('../dist/index.js').isEqual;
 var isEqualJSON = require('../dist/index.js').isEqualJSON;
 
+// item.r is return for isEqual
+// item.rj is for isEqualJSON
 var basicList = [
     { a: undefined, b: undefined, r: true },
     { a: null, b: null, r: true },
@@ -13,6 +15,10 @@ var basicList = [
     { a: 'aaa', b: 'bbb', r: false },
     { a: true, b: true, r: true },
     { a: true, b: false, r: false },
+    { a: +0, b: -0, r: false },
+    { a: /^jsmini$/, b: /^jsmini$/, r: true },
+    { a: /^jsmini$/g, b: /^jsmini$/, r: false, rj: true },
+    { a: /^jsmini$/, b: /^jsmini/, r: false, rj: true },
 ];
 
 var pkgList = [
@@ -22,6 +28,9 @@ var pkgList = [
     { a: new Number(1), b: new Number(2), r: false },
     { a: new String('1'), b: new String('1'), r: true },
     { a: new String('1'), b: new String('2'), r: false },
+    { a: new RegExp('^jsmini$'), b: new RegExp('^jsmini$'), r: true },
+    { a: new RegExp('^jsmini$', 'g'), b: new RegExp('^jsmini'), r: false, rj: true },
+    { a: new RegExp('^jsmini$'), b: new RegExp('^jsmini'), r: false, rj: true },
 ];
 
 var complexList = [
@@ -73,15 +82,15 @@ describe('单元测试', function() {
     describe('isEqualJSON', function() {
         it('normal', function() {
             basicList.forEach(function (item) {
-                expect(isEqualJSON(item.a, item.b)).to.equal(item.r);
+                expect(isEqualJSON(item.a, item.b)).to.equal(item.rj || item.r);
             })
 
             pkgList.forEach(function (item) {
-                expect(isEqualJSON(item.a, item.b)).to.equal(item.r);
+                expect(isEqualJSON(item.a, item.b)).to.equal(item.rj || item.r);
             })
 
             complexList.forEach(function (item) {
-                expect(isEqualJSON(item.a, item.b)).to.equal(item.r);
+                expect(isEqualJSON(item.a, item.b)).to.equal(item.rj || item.r);
             })
         });
 

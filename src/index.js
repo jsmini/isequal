@@ -16,7 +16,7 @@ function equalArray(value, other, compare) {
     }
 
     for (let i = 0; i < value.length; i++) {
-        if (value[i] !== other[i] && !isEqual(value[i], other[i], compare)) {
+        if (!isEqual(value[i], other[i], compare)) {
             return false;
         }
     }
@@ -35,7 +35,7 @@ function equalObject(value, other, compare) {
     for (let i = 0; i < vKeys.length; i++) {
         const v = value[vKeys[i]];
         const o = other[vKeys[i]];
-        if (v !== o && !isEqual(v, o, compare)) {
+        if (!isEqual(v, o, compare)) {
             return false;
         }
     }
@@ -47,7 +47,13 @@ export function isEqual (value, other, compare) {
     const next = () => {
         // 全等
         if (value === other) {
-            return true;
+            // 这里为了区别 +0 和 -0, 因为 1 / -0 = -Infinite, 1 / +0 = +Infinite
+            return value !== 0 || 1 / value === 1 / other;
+        }
+
+        // null 今早退出判断，以防进入 equalObject 判断
+        if (value === null || other === null) {
+            return false;
         }
 
         const vType = type(value, true);
@@ -63,25 +69,42 @@ export function isEqual (value, other, compare) {
             return true;
         }
 
-        // new Boolean|Number
-        if (vType === 'Boolean' || vType === 'Number') {
+        switch (vType) {
+        case 'Boolean':
+        case 'Date':
+        case 'Number':
             return +value === +other;
+        case 'String':
+        case 'regexp':
+            return '' + value === '' + other;
         }
 
-        // new String
-        if (vType === 'String') {
-            return String(value) === String(other);
+        if (vType !== 'array') {
+            // 存在 函数的情况
+            if (vType !== 'object' || oType !== 'object') {
+                return false;
+            }
+            
+            var vCtor = value.constructor;
+            var oCtor = other.constructor;
+            // value 和 other 构造函数都存在且不相等，那么他们就不该相等
+            if (
+                vCtor !== oCtor &&
+                !(
+                    type(vCtor, true) === 'function' &&
+                    type(oCtor, true) === 'function' &&
+                    'constructor' in value &&
+                    'constructor' in other
+                )
+            ) {
+                return false;
+            }
         }
-
-        if (vType === 'array') {
+        if (vType === 'array') { // 数组判断
             return equalArray(value, other, compare);
-        }
-
-        if (vType === 'object') {
+        } else { // 对象判断
             return equalObject(value, other, compare);
         }
-
-        return value === other;
     };
 
     if(type(compare) === 'function') {
@@ -91,5 +114,17 @@ export function isEqual (value, other, compare) {
 }
 
 export function isEqualJSON(value, other, replacer = false) {
+    var vType = type(value);
+    var oType = type(other);
+    if (vType === 'regexp') {
+        value = {};
+    }
+    if (oType === 'regexp') {
+        other = {};
+    }
+    // -0 should not equal +0
+    if (value === 0 && 1 / value !== 1 / other) {
+        return false;
+    }
     return JSON.stringify(value, replacer) === JSON.stringify(other, replacer);
 }
