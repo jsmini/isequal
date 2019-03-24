@@ -6,11 +6,12 @@
 
 支持的类型和比较情况如下：
 
-- 转换为基本值比较：Boolean, String, Number
+- 转换为数字比较：Boolean, Number, new Date
+- 转换为字符串比较：String, regexp, new RegExp
 - 递归比较：array, object
-- 全等比较：undefined, null, number, boolean, string, symbol, function, date, regexp等
+- 全等比较：undefined, null, number, boolean, string, symbol, function等
 
-可以使用自定义比较函数改变比较方式，比如function, date, regexp等
+可以使用自定义比较函数改变比较方式，比如function, map, set等
 
 函数参数和返回值
 

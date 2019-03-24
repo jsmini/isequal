@@ -15,7 +15,7 @@ var basicList = [
     { a: 'aaa', b: 'bbb', r: false },
     { a: true, b: true, r: true },
     { a: true, b: false, r: false },
-    { a: +0, b: -0, r: false },
+    { a: +0, b: -0, r: false, rj: true },
     { a: /^jsmini$/, b: /^jsmini$/, r: true },
     { a: /^jsmini$/g, b: /^jsmini$/, r: false, rj: true },
     { a: /^jsmini$/, b: /^jsmini/, r: false, rj: true },
@@ -31,6 +31,7 @@ var pkgList = [
     { a: new RegExp('^jsmini$'), b: new RegExp('^jsmini$'), r: true },
     { a: new RegExp('^jsmini$', 'g'), b: new RegExp('^jsmini'), r: false, rj: true },
     { a: new RegExp('^jsmini$'), b: new RegExp('^jsmini'), r: false, rj: true },
+    { a: new Date(), b: new Date(), r: true },
 ];
 
 var complexList = [
