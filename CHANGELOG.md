@@ -1,5 +1,10 @@
 # 变更日志
 
+## 0.3.0 / 2019-3-30
+
+- isEqual新增对Set的支持
+- isEqual新增对Map的支持
+
 ## 0.2.0 / 2019-3-24
 
 - isEqual新增对new Date的支持
