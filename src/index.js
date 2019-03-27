@@ -43,26 +43,25 @@ function equalObject(value, other, compare) {
     return true;
 }
 
-function equalMap(value, other, compare) {
 
-    if (value.size !== other.size) {
-        return false;
-    }
-    
-    const vKeys = value.keys();
+// map 转 array
+function map2Array (map) {
+    const result = Array(map.size);
 
-    for (let key of vKeys) {
-        if (!other.has(key)) {
-            return false;
-        }
-        const v = value.get(key);
-        const o = other.get(key);
-        if (!isEqual(v, o, compare)) {
-            return false;
-        }
-    }
+    map.forEach(function (value, key) {
+        result.push([key, value]);
+    });
+    return result;
+}
 
-    return true;
+function set2Array (set) {
+    const result = Array(set.size);
+
+    set.forEach((value) => {
+        result.push(value);
+    });
+
+    return result;
 }
 
 export function isEqual (value, other, compare) {
@@ -97,13 +96,11 @@ export function isEqual (value, other, compare) {
         }
 
         if (vType === 'set') {
-            value = Array.from(value);
-            other = Array.from(other);
-            return equalArray(value, other, compare);
+            return value.size === other.size && isEqual(set2Array(value), set2Array(other), compare);
         }
 
         if (vType === 'map') {
-            return equalMap(value, other, compare);
+            return value.size === other.size && isEqual(map2Array(value), map2Array(other), compare);
         }
 
         if (vType === 'array') { // 数组判断
