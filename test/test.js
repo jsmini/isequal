@@ -34,6 +34,22 @@ var pkgList = [
     { a: new Date(), b: new Date(), r: true },
 ];
 
+
+if (typeof Set === 'function') {
+    var setList = [
+        { a: new Set([1, 2]), b: new Set([1, 2]), r: true },
+        { a: new Set([1, 2]), b: new Set([1, 3]), r: false, rj: true },
+    ];
+}
+
+if (typeof Map === 'function') {
+    var mapList = [
+        { a: new Map([['a', '1'], ['b', '2']]), b: new Map([['a', '1'], ['b', '2']]), r: true },
+        { a: new Map([['a', '1'], ['b', '2']]), b: new Map([['a', '1'], ['b', '3']]), r: false, rj: true },
+    ];
+}
+
+
 var complexList = [
     { a: [1, 2, 3], b: [1, 2, 3], r: true },
     { a: [1, 2, 3], b: [1, 2, 1], r: false },
@@ -59,6 +75,18 @@ describe('单元测试', function() {
             complexList.forEach(function (item) {
                 expect(isEqual(item.a, item.b)).to.equal(item.r);
             })
+
+            if (typeof Set === 'function') {
+                setList.forEach(function (item) {
+                    expect(isEqual(item.a, item.b)).to.equal(item.r);
+                })
+            }
+
+            if (typeof Map === 'function') {
+                mapList.forEach(function (item) {
+                    expect(isEqual(item.a, item.b)).to.equal(item.r);
+                })
+            }
         });
 
         it('compare', function() {
@@ -93,6 +121,18 @@ describe('单元测试', function() {
             complexList.forEach(function (item) {
                 expect(isEqualJSON(item.a, item.b)).to.equal(item.rj || item.r);
             })
+
+            if (typeof Set === 'function') {
+                setList.forEach(function (item) {
+                    expect(isEqualJSON(item.a, item.b)).to.equal(item.rj || item.r);
+                })
+            }
+
+            if (typeof Map === 'function') {
+                mapList.forEach(function (item) {
+                    expect(isEqualJSON(item.a, item.b)).to.equal(item.rj || item.r);
+                })
+            }
         });
 
         it('replacer', function() {

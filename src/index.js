@@ -43,6 +43,27 @@ function equalObject(value, other, compare) {
     return true;
 }
 
+
+// map 转 array
+function map2Array (map) {
+    const result = Array(map.size);
+
+    map.forEach(function (value, key) {
+        result.push([key, value]);
+    });
+    return result;
+}
+
+function set2Array (set) {
+    const result = Array(set.size);
+
+    set.forEach((value) => {
+        result.push(value);
+    });
+
+    return result;
+}
+
 export function isEqual (value, other, compare) {
     const next = () => {
         // 全等
@@ -72,6 +93,14 @@ export function isEqual (value, other, compare) {
         // new String | /123/ | new RegExp
         if (vType === 'String' || vType === 'regexp') {
             return String(value) === String(other);
+        }
+
+        if (vType === 'set') {
+            return value.size === other.size && isEqual(set2Array(value), set2Array(other), compare);
+        }
+
+        if (vType === 'map') {
+            return value.size === other.size && isEqual(map2Array(value), map2Array(other), compare);
         }
 
         if (vType === 'array') { // 数组判断
