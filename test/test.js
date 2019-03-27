@@ -32,6 +32,10 @@ var pkgList = [
     { a: new RegExp('^jsmini$', 'g'), b: new RegExp('^jsmini'), r: false, rj: true },
     { a: new RegExp('^jsmini$'), b: new RegExp('^jsmini'), r: false, rj: true },
     { a: new Date(), b: new Date(), r: true },
+    { a: new Set([1, 2]), b: new Set([1, 2]), r: true },
+    { a: new Set([1, 2]), b: new Set([1, 3]), r: false, rj: true },
+    { a: new Map([['a', '1'], ['b', '2']]), b: new Map([['a', '1'], ['b', '2']]), r: true },
+    { a: new Map([['a', '1'], ['b', '2']]), b: new Map([['a', '1'], ['b', '3']]), r: false, rj: true },
 ];
 
 var complexList = [
