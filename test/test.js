@@ -1,5 +1,5 @@
 var expect = require('expect.js');
-
+var type = require('@jsmini/type').type;
 var isEqual = require('../dist/index.js').isEqual;
 var isEqualJSON = require('../dist/index.js').isEqualJSON;
 
@@ -89,22 +89,52 @@ describe('单元测试', function() {
             }
         });
 
-        it('compare', function() {
-            var a = {
-                a: function a() { console.log() }
-            };
-            var b = {
-                a: function a() { console.log() }
-            };
+        it('middleware', function() {
+            var a = function a() { console.log() }
+            var b = function a() { console.log() }
+
+            var middleware = function (next) {
+                return (v, o) => {
+                    if (typeof o === 'function' && typeof v === 'function') {
+                        return o.toString() === v.toString();
+                    }
+
+                    return next(v, o, next);
+                }
+            }
 
             expect(isEqual(a, b)).to.equal(false);
-            expect(isEqual(a, b, function (o, v, next) {
-                if (typeof o === 'function' && typeof v === 'function') {
-                    return o.toString() === v.toString();
-                }
+            expect(isEqual(a, b, middleware)).to.equal(true);
+        })
 
-                return next();
-            })).to.equal(true);
+        it('multi middleware', function() {
+            var a = new Set('1')
+            var b = ['1', '2'];
+
+            var middleware1 = function (next) {
+                return (v, o) => {
+                    if (type(v) === 'set') {
+                        var newV = Array.from(v);
+                        return next(newV, o, next);
+                    }
+
+                    return next(v, o, next);
+                }
+            }
+
+            var middleware2 = function (next) {
+                return (v, o) => {
+                    if (type(o) === 'array') {
+                        var newO = o.slice(0, 1);
+                        return next(v, newO, next);
+                    }
+
+                    return next(v, o, next);
+                }
+            }
+
+            expect(isEqual(a, b)).to.equal(false);
+            expect(isEqual(a, b, [middleware1, middleware2])).to.equal(true);
         })
     });
 

@@ -1,4 +1,7 @@
 import { type } from '@jsmini/type';
+import { compose } from '@jsmini/functional';
+import equalMap from './middleware/map';
+import equalSet from './middleware/set';
 
 function keys(obj) {
     const keyList = [];
@@ -10,13 +13,13 @@ function keys(obj) {
     return keyList;
 }
 
-function equalArray(value, other, compare) {
+function equalArray(value, other) {
     if (value.length !== other.length) {
         return false;
     }
 
     for (let i = 0; i < value.length; i++) {
-        if (!isEqual(value[i], other[i], compare)) {
+        if (!isEqual(value[i], other[i])) {
             return false;
         }
     }
@@ -24,7 +27,7 @@ function equalArray(value, other, compare) {
     return true;
 }
 
-function equalObject(value, other, compare) {
+function equalObject(value, other) {
     const vKeys = keys(value);
     const oKeys = keys(other);
 
@@ -35,7 +38,7 @@ function equalObject(value, other, compare) {
     for (let i = 0; i < vKeys.length; i++) {
         const v = value[vKeys[i]];
         const o = other[vKeys[i]];
-        if (!isEqual(v, o, compare)) {
+        if (!isEqual(v, o)) {
             return false;
         }
     }
@@ -43,38 +46,22 @@ function equalObject(value, other, compare) {
     return true;
 }
 
+const defaultMiddleware = [
+    equalMap,
+    equalSet,
+];
 
-// map 转 array
-function map2Array (map) {
-    const result = Array(map.size);
-
-    map.forEach(function (value, key) {
-        result.push([key, value]);
-    });
-    return result;
-}
-
-function set2Array (set) {
-    const result = Array(set.size);
-
-    set.forEach((value) => {
-        result.push(value);
-    });
-
-    return result;
-}
-
-export function isEqual (value, other, compare) {
-    const next = () => {
+export function isEqual (value, other, opts) {
+    const next = (value, other) => {
         // 全等
         if (value === other) {
             // 这里为了区别 +0 和 -0, 因为 1 / -0 = -Infinite, 1 / +0 = +Infinite
             return value !== 0 || 1 / value === 1 / other;
         }
-
+    
         const vType = type(value, true);
         const oType = type(other, true);
-
+    
         // 类型不同
         if (vType !== oType) {
             return false;
@@ -84,39 +71,44 @@ export function isEqual (value, other, compare) {
         if (value !== value && other !== other) {
             return true;
         }
-
+    
         // new Boolean|Number|Date
         if (vType === 'Boolean' || vType === 'Number' || vType === 'date') {
             return +value === +other;
         }
-
+    
         // new String | /123/ | new RegExp
         if (vType === 'String' || vType === 'regexp') {
             return String(value) === String(other);
         }
-
-        if (vType === 'set') {
-            return value.size === other.size && isEqual(set2Array(value), set2Array(other), compare);
-        }
-
-        if (vType === 'map') {
-            return value.size === other.size && isEqual(map2Array(value), map2Array(other), compare);
-        }
-
+    
         if (vType === 'array') { // 数组判断
-            return equalArray(value, other, compare);
+            return equalArray(value, other);
         }
         if (vType === 'object') { // 对象判断
-            return equalObject(value, other, compare);
+            return equalObject(value, other);
         }
-
+    
         return value === other;
     };
 
-    if(type(compare) === 'function') {
-        return compare(value, other, next);
+    let middlewares;
+    if (type(opts) === 'array') {
+        for (const fn of opts) {
+            if (typeof fn !== 'function') {
+                throw new TypeError('Middleware must be composed of functions');
+            }
+        }
+        middlewares = opts;
+    } else if (type(opts) === 'function') {
+        middlewares = [ opts ];
+    } else {
+        middlewares = [];
     }
-    return next();
+
+    middlewares = middlewares.concat(defaultMiddleware);
+
+    return compose(...middlewares)(next)(value, other);
 }
 
 export function isEqualJSON(value, other, replacer = false) {
