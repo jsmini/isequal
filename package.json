@@ -1,6 +1,6 @@
 {
   "name": "@jsmini/isequal",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "支持复杂数据的值比较",
   "main": "dist/index.js",
   "jsnext:main": "dist/index.esm.js",
