@@ -1,6 +1,8 @@
 var expect = require('expect.js');
 
 var isEqual = require('../dist/index.js').isEqual;
+var compose = require('../dist/index.js').compose;
+var functionMiddleware = require('../dist/index.js').functionMiddleware;
 var isEqualJSON = require('../dist/index.js').isEqualJSON;
 
 // item.r is return for isEqual
@@ -105,6 +107,19 @@ describe('单元测试', function() {
 
                 return next();
             })).to.equal(true);
+        })
+
+        it('functionMiddleware', function() {
+            var a = {
+                a: function a() { console.log() }
+            };
+            var b = {
+                a: function a() { console.log() }
+            };
+
+            expect(isEqual(a, b)).to.equal(false);
+            expect(isEqual(a, b, functionMiddleware())).to.equal(true);
+            expect(isEqual(a, b, compose(functionMiddleware()))).to.equal(true);
         })
     });
 

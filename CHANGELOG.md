@@ -1,5 +1,10 @@
 # 变更日志
 
+## 0.4.0 / 2019-3-31
+
+- feat: isEqual新增中间件支持
+- feat: 新增functionMiddleware中间件
+
 ## 0.3.0 / 2019-3-30
 
 - isEqual新增对Set的支持
