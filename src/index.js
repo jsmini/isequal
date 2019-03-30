@@ -1,4 +1,6 @@
 import { type } from '@jsmini/type';
+export { compose } from '@jsmini/functional';
+export { functionMiddleware } from './middleware.js';
 
 function keys(obj) {
     const keyList = [];
@@ -10,13 +12,13 @@ function keys(obj) {
     return keyList;
 }
 
-function equalArray(value, other, compare) {
+function equalArray(value, other, enhancer) {
     if (value.length !== other.length) {
         return false;
     }
 
     for (let i = 0; i < value.length; i++) {
-        if (!isEqual(value[i], other[i], compare)) {
+        if (!isEqual(value[i], other[i], enhancer)) {
             return false;
         }
     }
@@ -24,7 +26,7 @@ function equalArray(value, other, compare) {
     return true;
 }
 
-function equalObject(value, other, compare) {
+function equalObject(value, other, enhancer) {
     const vKeys = keys(value);
     const oKeys = keys(other);
 
@@ -35,14 +37,13 @@ function equalObject(value, other, compare) {
     for (let i = 0; i < vKeys.length; i++) {
         const v = value[vKeys[i]];
         const o = other[vKeys[i]];
-        if (!isEqual(v, o, compare)) {
+        if (!isEqual(v, o, enhancer)) {
             return false;
         }
     }
 
     return true;
 }
-
 
 // map 转 array
 function map2Array (map) {
@@ -64,7 +65,7 @@ function set2Array (set) {
     return result;
 }
 
-export function isEqual (value, other, compare) {
+export function isEqual (value, other, enhancer) {
     const next = () => {
         // 全等
         if (value === other) {
@@ -96,25 +97,28 @@ export function isEqual (value, other, compare) {
         }
 
         if (vType === 'set') {
-            return value.size === other.size && isEqual(set2Array(value), set2Array(other), compare);
+            return value.size === other.size && isEqual(set2Array(value), set2Array(other), enhancer);
         }
 
         if (vType === 'map') {
-            return value.size === other.size && isEqual(map2Array(value), map2Array(other), compare);
+            return value.size === other.size && isEqual(map2Array(value), map2Array(other), enhancer);
         }
 
         if (vType === 'array') { // 数组判断
-            return equalArray(value, other, compare);
+            return equalArray(value, other, enhancer);
         }
         if (vType === 'object') { // 对象判断
-            return equalObject(value, other, compare);
+            return equalObject(value, other, enhancer);
         }
 
         return value === other;
     };
 
-    if(type(compare) === 'function') {
-        return compare(value, other, next);
+    if(type(enhancer) === 'function') {
+        const res = enhancer(value, other, next);
+
+        // 兼容比较函数和中间件
+        return type(res) === 'function' ?  enhancer(next)(value, other) : res;
     }
     return next();
 }

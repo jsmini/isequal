@@ -17,30 +17,52 @@
 
 - @param {*} value 要判断的参数
 - @param {*} object 要判断的另一个参数
-- @param {function} compare 自定义比较函数
+- @param {function} enhancer 自定义比较函数或中间件
 - @return {boolean} 是否相等
 
 举个例子（要包含代码用例）
 
 ```js
+import { isEqual } from '@jsmini/isequal';
+
 var a = {a: 1};
 var b = {a: 1};
 
 a === b // false
-isEqualJSON(a, b) // true
+isEqual(a, b) // true
+```
 
+自定义比较函数
 
+```js
 var c = function a() {}
 var d = function a() {}
 
-isEqualJSON(c, d); // false
-isEqualJSON(c, d, function (o, t, next) {
+isEqual(c, d); // false
+isEqual(c, d, function (o, t, next) {
     if (typeof o === 'function' && typeof t === 'function') {
         return o.toString() === t.toString();
     }
 
     return next(); 
 }); // true
+```
+
+使用中间件
+
+- functionMiddleware 支持函数的字符串化比较
+
+```js
+import { compose, functionMiddleware } from '@jsmini/isequal';
+
+var c = function a() {}
+var d = function a() {}
+
+isEqual(c, d); // false
+// 单个中间件
+isEqual(c, d, functionMiddleware()); // true
+// 多个中间件
+isEqual(c, d, compose(functionMiddleware(), functionMiddleware()); // true
 ```
 
 ## isEqualJSON
@@ -56,12 +78,18 @@ isEqualJSON(c, d, function (o, t, next) {
 举个例子（要包含代码用例）
 
 ```js
+import { isEqualJSON } from '@jsmini/isequal';
+
 var a = {a: 1};
 var b = {a: 1};
 
 a === b // false
 isEqualJSON(a, b) // true
+```
 
+自定义替换函数
+
+```js
 var c = function a() {}
 var d = function b() {}
 
