@@ -22,7 +22,7 @@
     <script>
         var libs = {
             'expect.js': expect,
-            '../dist/index.js': jslib_isequal
+            '../src/index.js': window['jsmini_isequal']
         };
         var require = function(path) {
             return libs[path];

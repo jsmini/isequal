@@ -1,9 +1,9 @@
 var expect = require('expect.js');
 
-var isEqual = require('../dist/index.js').isEqual;
-var compose = require('../dist/index.js').compose;
-var functionMiddleware = require('../dist/index.js').functionMiddleware;
-var isEqualJSON = require('../dist/index.js').isEqualJSON;
+var isEqual = require('../src/index.js').isEqual;
+var compose = require('../src/index.js').compose;
+var functionMiddleware = require('../src/index.js').functionMiddleware;
+var isEqualJSON = require('../src/index.js').isEqualJSON;
 
 // item.r is return for isEqual
 // item.rj is for isEqualJSON
