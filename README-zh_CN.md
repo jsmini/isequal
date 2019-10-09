@@ -3,7 +3,7 @@
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jsmini/isequal/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/jsmini/isequal.svg?branch=master)](https://travis-ci.org/jsmini/isequal)
 [![Coveralls](https://img.shields.io/coveralls/jsmini/isequal.svg)](https://coveralls.io/github/jsmini/isequal)
-[![npm](https://img.shields.io/badge/npm-0.4.0-orange.svg)](https://www.npmjs.com/package/@jsmini/isequal)
+[![npm](https://img.shields.io/badge/npm-0.4.2-orange.svg)](https://www.npmjs.com/package/@jsmini/isequal)
 [![NPM downloads](http://img.shields.io/npm/dm/@jsmini/isequal.svg?style=flat-square)](http://www.npmtrends.com/@jsmini/isequal)
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/jsmini/isequal.svg)](http://isitmaintained.com/project/jsmini/isequal "Percentage of issues still open")
 
