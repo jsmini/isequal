@@ -1,22 +1,23 @@
-# [isequal](https://github.com/jsmini/isequal) 
+# [isequal](https://github.com/jsmini/isequal)
+
 [![](https://img.shields.io/badge/Powered%20by-jslib%20isequal-brightgreen.svg)](https://github.com/yanhaijing/jslib-isequal)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jsmini/isequal/blob/master/LICENSE)
-[![Build Status](https://travis-ci.org/jsmini/isequal.svg?branch=master)](https://travis-ci.org/jsmini/isequal)
-[![Coveralls](https://img.shields.io/coveralls/jsmini/isequal.svg)](https://coveralls.io/github/jsmini/isequal)
+[![CI](https://github.com/jsmini/isequal/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/jsmini/isequal/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/badge/npm-0.4.2-orange.svg)](https://www.npmjs.com/package/@jsmini/isequal)
 [![NPM downloads](http://img.shields.io/npm/dm/@jsmini/isequal.svg?style=flat-square)](http://www.npmtrends.com/@jsmini/isequal)
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/jsmini/isequal.svg)](http://isitmaintained.com/project/jsmini/isequal "Percentage of issues still open")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/jsmini/isequal.svg)](http://isitmaintained.com/project/jsmini/isequal 'Percentage of issues still open')
 
 支持复杂数据的值比较
 
 [English](./README.md) | 简体中文
 
 ## 兼容性
+
 单元测试保证支持如下环境：
 
-| IE   | CH   | FF   | SF   | OP   | IOS  | 安卓   | Node  |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----- |
-| 6+   | 23+  | 4+   | 6+   | 10+  | 5+   | 2.3+ | 0.10+ |
+| IE  | CH  | FF  | SF  | OP  | IOS | 安卓 | Node  |
+| --- | --- | --- | --- | --- | --- | ---- | ----- |
+| 6+  | 23+ | 4+  | 6+  | 10+ | 5+  | 2.3+ | 0.10+ |
 
 ## 目录介绍
 
@@ -32,6 +33,7 @@
 ```
 
 ## 如何使用
+
 通过npm下载安装代码
 
 ```bash
@@ -53,9 +55,12 @@ import { name } from '@jsmini/isequal';
 如果你是requirejs环境
 
 ```js
-requirejs(['node_modules/@jsmini/isequal/dist/index.aio.js'], function (jsmini_isequal) {
+requirejs(
+  ['node_modules/@jsmini/isequal/dist/index.aio.js'],
+  function (jsmini_isequal) {
     var name = jsmini_isequal.name;
-})
+  },
+);
 ```
 
 如果你是浏览器环境
@@ -64,14 +69,16 @@ requirejs(['node_modules/@jsmini/isequal/dist/index.aio.js'], function (jsmini_i
 <script src="node_modules/@jsmini/isequal/dist/index.aio.js"></script>
 
 <script>
-    var name = jsmini_isequal.name;
+  var name = jsmini_isequal.name;
 </script>
 ```
 
 ## 文档
+
 [API](https://github.com/jsmini/isequal/blob/master/doc/api.md)
 
-## 贡献指南 ![PRs welcome](<https://img.shields.io/badge/PRs-welcome-brightgreen.svg>)
+## 贡献指南 ![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+
 首次运行需要先安装依赖
 
 ```bash
@@ -114,12 +121,15 @@ $ npm run rename # 重命名命令
 ```
 
 ## 贡献者列表
+
 [contributors](https://github.com/jsmini/isequal/graphs/contributors)
 
 ## 更新日志
+
 [CHANGELOG.md](https://github.com/jsmini/isequal/blob/master/CHANGELOG.md)
 
 ## 计划列表
+
 [TODO.md](https://github.com/jsmini/isequal/blob/master/TODO.md)
 
 ## 谁在使用

@@ -1,15 +1,13 @@
-# [isequal](https://github.com/jsmini/isequal) 
+# [isequal](https://github.com/jsmini/isequal)
+
 [![](https://img.shields.io/badge/Powered%20by-jslib%20isequal-brightgreen.svg)](https://github.com/yanhaijing/jslib-isequal)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jsmini/isequal/blob/master/LICENSE)
-[![Build Status](https://travis-ci.org/jsmini/isequal.svg?branch=master)](https://travis-ci.org/jsmini/isequal)
-[![Coveralls](https://img.shields.io/coveralls/jsmini/isequal.svg)](https://coveralls.io/github/jsmini/isequal)
+[![CI](https://github.com/jsmini/isequal/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/jsmini/isequal/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/badge/npm-0.4.2-orange.svg)](https://www.npmjs.com/package/@jsmini/isequal)
 [![NPM downloads](http://img.shields.io/npm/dm/@jsmini/isequal.svg?style=flat-square)](http://www.npmtrends.com/@jsmini/isequal)
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/jsmini/isequal.svg)](http://isitmaintained.com/project/jsmini/isequal "Percentage of issues still open")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/jsmini/isequal.svg)](http://isitmaintained.com/project/jsmini/isequal 'Percentage of issues still open')
 
-Compare  two value is equal
-
-支持复杂数据的值比较  support compare of object or array
+Compare two value is equal, support compare of object or array
 
 English | [简体中文](./README-zh_CN.md)
 
@@ -17,9 +15,9 @@ English | [简体中文](./README-zh_CN.md)
 
 unit test ensure it supports the following environments.
 
-| IE/Edge | Chrome | Firefox | Safari | Opera | IOS  | Android | Node  |
-| ------- | ------ | ------- | ------ | ----- | ---- | ------- | ----- |
-| 6+      | 23+    | 4+      | 6+     | 10+   | 5+   | 2.3+    | 0.10+ |
+| IE/Edge | Chrome | Firefox | Safari | Opera | IOS | Android | Node  |
+| ------- | ------ | ------- | ------ | ----- | --- | ------- | ----- |
+| 6+      | 23+    | 4+      | 6+     | 10+   | 5+  | 2.3+    | 0.10+ |
 
 ## Directory
 
@@ -35,6 +33,7 @@ unit test ensure it supports the following environments.
 ```
 
 ## Usage
+
 npm installation
 
 ```bash
@@ -56,9 +55,12 @@ import { name } from '@jsmini/isequal';
 Require.js
 
 ```js
-requirejs(['node_modules/@jsmini/isequal/dist/index.aio.js'], function (jsmini_isequal) {
+requirejs(
+  ['node_modules/@jsmini/isequal/dist/index.aio.js'],
+  function (jsmini_isequal) {
     var name = jsmini_isequal.name;
-})
+  },
+);
 ```
 
 Browser
@@ -67,7 +69,7 @@ Browser
 <script src="node_modules/@jsmini/isequal/dist/index.aio.js"></script>
 
 <script>
-    var name = jsmini_isequal.name;
+  var name = jsmini_isequal.name;
 </script>
 ```
 
@@ -75,8 +77,9 @@ Browser
 
 - [API](https://github.com/jsmini/isequal/blob/master/doc/api.md)
 
-## Contributing Guide  ![PRs welcome](<https://img.shields.io/badge/PRs-welcome-brightgreen.svg>)
-when initialize, install dependencies 
+## Contributing Guide ![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+
+when initialize, install dependencies
 
 ```bash
 $ npm install
@@ -88,13 +91,13 @@ builds your code for production to `build` folder
 $ npm run build
 ```
 
-run unit test.  notice: borwser enviroment need to test manually.  test file is in `test/browser`
+run unit test. notice: borwser enviroment need to test manually. test file is in `test/browser`
 
 ```bash
 $ npm test
 ```
 
-change  the  version in package.json and README.md, add your description in CHANGELOG.md, and then release it happily.
+change the version in package.json and README.md, add your description in CHANGELOG.md, and then release it happily.
 
 ```bash
 $ npm run release
@@ -106,7 +109,7 @@ publish the new package to npm
 $ npm publish --access=public
 ```
 
-rename  project. you need to edit project name when initialize project or anytime you want to rename the project . you need to rename `formName` and `toname` in file `rename.js`,which will automatically rename project name in the following files
+rename project. you need to edit project name when initialize project or anytime you want to rename the project . you need to rename `formName` and `toname` in file `rename.js`,which will automatically rename project name in the following files
 
 - README.md
 - package.json
@@ -118,12 +121,15 @@ $ npm run rename # rename command
 ```
 
 ## Contributors
+
 [contributors](https://github.com/jsmini/isequal/graphs/contributors)
 
 ## CHANGELOG
+
 [CHANGELOG.md](https://github.com/jsmini/isequal/blob/master/CHANGELOG.md)
 
 ## TODO
+
 [TODO.md](https://github.com/jsmini/isequal/blob/master/TODO.md)
 
 ## who is using

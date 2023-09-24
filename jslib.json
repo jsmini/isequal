@@ -1,9 +1,9 @@
 {
-    "name": "isequal",
-    "npmname": "@jsmini/isequal",
-    "umdname": "jsmini_isequal",
-    "username": "jsmini",
-    "type": "js",
-    "lang": "zh",
-    "version": "1.4.0"
+  "name": "isequal",
+  "npmname": "@jsmini/isequal",
+  "umdname": "jsmini_isequal",
+  "username": "jsmini",
+  "type": "js",
+  "lang": "zh",
+  "version": "1.4.0"
 }

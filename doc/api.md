@@ -1,7 +1,9 @@
 # 文档
+
 支持复杂数据的值比较
 
 ## isEqual
+
 递归判断两个变量是否相等，支持自定义比较函数
 
 支持的类型和比较情况如下：
@@ -15,8 +17,8 @@
 
 函数参数和返回值
 
-- @param {*} value 要判断的参数
-- @param {*} object 要判断的另一个参数
+- @param {\*} value 要判断的参数
+- @param {\*} object 要判断的另一个参数
 - @param {function} enhancer 自定义比较函数或中间件
 - @return {boolean} 是否相等
 
@@ -25,26 +27,26 @@
 ```js
 import { isEqual } from '@jsmini/isequal';
 
-var a = {a: 1};
-var b = {a: 1};
+var a = { a: 1 };
+var b = { a: 1 };
 
-a === b // false
-isEqual(a, b) // true
+a === b; // false
+isEqual(a, b); // true
 ```
 
 自定义比较函数
 
 ```js
-var c = function a() {}
-var d = function a() {}
+var c = function a() {};
+var d = function a() {};
 
 isEqual(c, d); // false
 isEqual(c, d, function (o, t, next) {
-    if (typeof o === 'function' && typeof t === 'function') {
-        return o.toString() === t.toString();
-    }
+  if (typeof o === 'function' && typeof t === 'function') {
+    return o.toString() === t.toString();
+  }
 
-    return next(); 
+  return next();
 }); // true
 ```
 
@@ -66,12 +68,13 @@ isEqual(c, d, compose(functionMiddleware(), functionMiddleware()); // true
 ```
 
 ## isEqualJSON
+
 判断两个变量是否相等，内部使用`JSON.stringify`序列化变量，再做比较
 
 函数参数和返回值
 
-- @param {*} value 要判断的参数
-- @param {*} object 要判断的另一个参数
+- @param {\*} value 要判断的参数
+- @param {\*} object 要判断的另一个参数
 - @param {function|array} replacer 同JSON.stringify的replacer
 - @return {boolean} 是否相等
 
@@ -80,25 +83,25 @@ isEqual(c, d, compose(functionMiddleware(), functionMiddleware()); // true
 ```js
 import { isEqualJSON } from '@jsmini/isequal';
 
-var a = {a: 1};
-var b = {a: 1};
+var a = { a: 1 };
+var b = { a: 1 };
 
-a === b // false
-isEqualJSON(a, b) // true
+a === b; // false
+isEqualJSON(a, b); // true
 ```
 
 自定义替换函数
 
 ```js
-var c = function a() {}
-var d = function b() {}
+var c = function a() {};
+var d = function b() {};
 
-isEqualJSON(c, d) // true
+isEqualJSON(c, d); // true
 isEqualJSON(c, d, function (k, v) {
-    if (typeof v === 'function') {
-        return v.toString();
-    }
+  if (typeof v === 'function') {
+    return v.toString();
+  }
 
-    return v;
-}) // false
+  return v;
+}); // false
 ```
